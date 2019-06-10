@@ -25,7 +25,7 @@ SECRET_KEY = '463hzk*onkb4h&+j@mof$wc(20t$$l17w#(v8-6ipzq7m=$a=j'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['react-django.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['react-django.herokuapp.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -39,13 +39,17 @@ INSTALLED_APPS = [
   'django.contrib.sessions',
   'django.contrib.messages',
   'django.contrib.staticfiles',
+  'corsheaders',
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True
+#'django.middleware.csrf.CsrfViewMiddleware',
 
 MIDDLEWARE = [
   'django.middleware.security.SecurityMiddleware',
   'django.contrib.sessions.middleware.SessionMiddleware',
   'django.middleware.common.CommonMiddleware',
-  'django.middleware.csrf.CsrfViewMiddleware',
+  'corsheaders.middleware.CorsMiddleware',
   'django.contrib.auth.middleware.AuthenticationMiddleware',
   'django.contrib.messages.middleware.MessageMiddleware',
   'django.middleware.clickjacking.XFrameOptionsMiddleware',

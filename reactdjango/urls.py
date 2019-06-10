@@ -22,5 +22,5 @@ urlpatterns = [
   path('admin/', admin.site.urls),
   # path('api/', include('sampleapp.urls')),
   re_path('.*', TemplateView.as_view(template_name='index.html')),
-    path(r'register_user/', register_user )
+  path(r'register_user/', register_user ),
 ]

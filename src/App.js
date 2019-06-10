@@ -1635,7 +1635,8 @@ registerUser = event =>  {
         phoneNumber: registrationDetails.phoneNumber
     }) 
     
-      fetch('http://127.0.0.1:8000/register_user',{
+    try{
+      fetch('http://127.0.0.1:8000/register_user/',{
           method: 'POST',
           headers: {
               'Content-Type': 'application/json'
@@ -1643,6 +1644,10 @@ registerUser = event =>  {
           body: registrationDetailsToBeSubmitted
       })
     .then(response => console.log(response))
+    }
+    catch(err) {
+        console.log(err, "Error")
+    }
 }
 
 updateUsernameInState = event => {
