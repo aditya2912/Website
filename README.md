@@ -14,6 +14,6 @@ Simple setup for a React-Django web app.
   1) pip install django-cors-headers
   2) pip install SQLAlchemy
 - Finally run the following command to install bootstrap -> npm install react-bootstrap bootstrap
-
-
+ 
+NOTE :-  We also need to copy the "index.html" from public folder to the build folder in order to resolve the TemplateNotFound error.
 
