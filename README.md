@@ -13,4 +13,7 @@ Simple setup for a React-Django web app.
 - Run the following commands to install the following pip packages :-
   1) pip install django-cors-headers
   2) pip install SQLAlchemy
+- Finally run the following command to install bootstrap -> npm install react-bootstrap bootstrap
+
+
 
