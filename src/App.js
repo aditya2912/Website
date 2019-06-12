@@ -914,6 +914,7 @@ import React from 'react'
 import Button from 'react-bootstrap/Button';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import scrollClass from './App.css';
+import axios from 'axios';
 
 class App extends React.Component {
   constructor(props) {
@@ -946,26 +947,6 @@ changeEditorState = event => {
   })
 }
 
-renderJoinTypesImageArea() {
-  let innerJoinImage = require('C:/Elm/gitproject/src/innerJoin.gif')
-  let leftJoinImage = require('C:/Elm/gitproject/src/leftJoin.gif')
-  let rightJoinImage = require('C:/Elm/gitproject/src/rightJoin.gif')
-  let fullOuterJoinImage = require('C:/Elm/gitproject/src/fullOuterJoin.gif')
-  return (
-    <div>
-      <img src={innerJoinImage} />
-      {" "}
-      {" "}
-      <img src={leftJoinImage} />
-      {" "}
-      {" "}
-      <img src={rightJoinImage} />
-      {" "}
-      {" "}
-      <img src={fullOuterJoinImage} />
-    </div>
-  )
-}
 
 previousAndNextButtonToolbar() {
   return (
@@ -1094,9 +1075,7 @@ renderMainPageContent() {
  <div>
     {this.renderTypesOfJoinArea()}
   </div>
-<div>
-  {this.renderJoinTypesImageArea()}
- </div>
+
  <br/>
  <div>
   {this.renderExerciseArea()}
@@ -1617,11 +1596,11 @@ navigateToAboutPage = event => {
       <p> It is , and always be, a completely free developer resource </p>
       <hr/>
       <h3> You Can Help </h3>
-      
+
       </div>
     )
   }
-      
+
 navigateToRegisterForm = event => {
     this.setState({pageContent: "register-form"})
 }
@@ -1633,17 +1612,20 @@ registerUser = event =>  {
         password: registrationDetails.password,
         email: registrationDetails.email,
         phoneNumber: registrationDetails.phoneNumber
-    }) 
-    
+    })
+
     try{
-      fetch('http://127.0.0.1:8000/register_user/',{
+      fetch('http://localhost:8000/register_user/',{
           method: 'POST',
+          mode: 'no-cors',
           headers: {
+              'Accept': 'application/json',
               'Content-Type': 'application/json'
+
           },
           body: registrationDetailsToBeSubmitted
       })
-    .then(response => console.log(response))
+    .then(response => console.log(response, "Error"))
     }
     catch(err) {
         console.log(err, "Error")
@@ -1656,7 +1638,7 @@ updateUsernameInState = event => {
     let email = this.state.registrationDetails.email
     let phoneNumber = this.state.registrationDetails.phoneNumber
     let updatedDetails = {userName: userName, password: password, email: email, phoneNumber: phoneNumber }
-    this.setState({registrationDetails: updatedDetails})     
+    this.setState({registrationDetails: updatedDetails})
 }
 
 updatePasswordInState = event => {
@@ -1741,7 +1723,7 @@ renderRegisterForm() {
  changeStateAfterClick = (linkText) => {
     this.setState({pageContent: linkText.link})
   }
-  
+
 //  else if (this.state.pageContent == "about-page") {
 //        return(
 //          <div>
@@ -1760,11 +1742,11 @@ renderRegisterForm() {
         )
     } else if (this.state.pageContent == "register-form") {
         return (
-         <div> 
+         <div>
             {this.renderRegisterForm()}
         </div>
-        )  
-        
+        )
+
     }  else {
       return(
         <div>

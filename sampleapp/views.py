@@ -5,4 +5,4 @@ from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
 def register_user(request):
     print(" I am Here @@@@@@@@@@@@@@@@@@@@@")
-    return render(request, '' , {})
+    return render(request, "C:/Website/public/index.html", {})
