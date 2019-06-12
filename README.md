@@ -9,4 +9,8 @@ Simple setup for a React-Django web app.
 - Install React dependencies with `npm install`. 
 - Run React app with `npm start`.
 - Build React app using `npm run build`.
+- Build migrations using manage.py migrate.
+- Run the following commands to install the following pip packages :-
+  1) pip install django-cors-headers
+  2) pip install SQLAlchemy
 
