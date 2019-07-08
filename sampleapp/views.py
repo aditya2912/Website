@@ -7,15 +7,18 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import select
-import mysql.connector
+
+# import mysql.connector
 import datetime
 from .models import RegistrationDetails
+from django.views.decorators.csrf import ensure_csrf_cookie
 
-#Write query functions here
+# Write query functions here
 
-#Custom function to generate uuid on the basis of time and date
+# Custom function to generate uuid on the basis of time and date
 # return type : string
 # arguments : None
+
 
 def generate_uuid():
     year = str(datetime.datetime.now().year)
@@ -28,8 +31,9 @@ def generate_uuid():
     uuid = uuid = year + month + day + hour + minute + second + microsecond
     return str(uuid)
 
+
 def saveRegistrationDetailsIntoDatabase(request_parameters):
-    engine = create_engine('sqlite:///RegistrationDetailsDatabase.db')
+    engine = create_engine("sqlite:///RegistrationDetailsDatabase.db")
     user_uuid = generate_uuid()
     user_name = request_parameters["user_name"]
     password = request_parameters["password"]
@@ -37,19 +41,24 @@ def saveRegistrationDetailsIntoDatabase(request_parameters):
     phone_number = request_parameters["phone_number"]
     Base = declarative_base()
     Base.metadata.bind = engine
-    DBSession = sessionmaker(bind = engine)
+    DBSession = sessionmaker(bind=engine)
     session = DBSession()
-    userDetailsData = RegistrationDetails(user_uuid=user_uuid, username=user_name,password=password,email=email, phone_number=phone_number) 
+    userDetailsData = RegistrationDetails(
+        user_uuid=user_uuid,
+        username=user_name,
+        password=password,
+        email=email,
+        phone_number=phone_number,
+    )
     session.add(userDetailsData)
-    try: 
+    try:
         session.commit()
         print("Data saved successfully")
         return user_uuid
-    except IOError: 
+    except IOError:
         print("Unable to save data", IOError)
 
-    
-    
+
 # Create your views here.
 @csrf_exempt
 def register_user(request):
@@ -57,11 +66,24 @@ def register_user(request):
     password = ""
     email = ""
     phone_number = ""
-    
+
     if request.method == "POST":
         user_object = json.loads(request.body.decode("utf-8"))
-        request_parameters = {"user_name": user_object["userName"], "password": user_object['password'], "email": user_object["email"],"phone_number": user_object["phoneNumber"]}
+        request_parameters = {
+            "user_name": user_object["userName"],
+            "password": user_object["password"],
+            "email": user_object["email"],
+            "phone_number": user_object["phoneNumber"],
+        }
         user_uuid = saveRegistrationDetailsIntoDatabase(request_parameters)
-        user_uuid_json = json.dumps(user_uuid,indent=2)
+        user_uuid_json = json.dumps(user_uuid, indent=2)
         print("***************", user_uuid_json)
+
         return HttpResponse(user_uuid_json, content_type="application/json")
+        # return render(request, "index.html", {"user_uuid_json": user_uuid_json})
+
+
+@csrf_exempt
+def get_registered_user(request):
+    print(request.method, "REQUEST METHOD")
+    return render(request, "index.html", {})

@@ -1778,16 +1778,21 @@ import React from 'react'
 import Button from 'react-bootstrap/Button';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import scrollClass from './App.css';
+import axios from 'axios';
+import DjangoCsrfToken from 'django-react-csrftoken';
+
 
 class App extends React.Component {
     constructor(props){
         super(props);
     }
-    
+
     state = {
-            registrationDetails: {userName: "", password: "", email: "", phoneNumber: ""},
-        pageContent: "login-register-page"
+        registrationDetails: {userName: "", password: "", email: "", phoneNumber: ""},
+        pageContent: "login-register-page",
+        respose_var: ""
     }
+
 
 navigateToRegisterForm = event => {
     this.setState({pageContent: "register-form"})
@@ -1829,7 +1834,12 @@ updatePhoneNumberInState = event => {
     this.setState({registrationDetails: updatedDetails})
 }
 
-   registerUser = event =>  {
+updateState(responseReceived) {
+  let updatedResponseVar = responseReceived.data.login
+  this.setState({response_var: updatedResponseVar})
+}
+
+registerUser = event =>  {
     let registrationDetails = this.state.registrationDetails
     let registrationDetailsToBeSubmitted = JSON.stringify({
         userName: registrationDetails.userName,
@@ -1839,27 +1849,101 @@ updatePhoneNumberInState = event => {
     })
 
     try{
-      fetch('http://localhost:8000/register_user/',{
-          method: 'POST',
-          mode: 'no-cors',
-          headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
+        axios.get('http:localhost:8000/fetch_details' + '20197813215600296')
+        .then(response =>
+          console.log(response, "RESPONSE")
+         )
 
-          },
-          body: registrationDetailsToBeSubmitted
-      })
-    .then(response => console.log(response, "Request Successful"))
-    .then(res => res.json())
+        // axios.get('https://api.github.com/users/' + 'aditya2912')
+        //  .then(res =>
+        //      this.updateState(res)
+        //  )
+
+    //   fetch('http://localhost:8000/register_user/',{
+    //       method: 'POST',
+    //
+    //       headers: {
+    //           'Accept': 'application/json',
+    //           'Content-Type': 'application/json'
+    //
+    //       },
+    //       body: registrationDetailsToBeSubmitted
+    //   })
+    // .then(response =>
+    //   console.log(response.body, response,  "Request Successful")
+    // )
+    // .then(res => res.json())
     }
     catch(err) {
         console.log(err, "Error")
     }
+    console.log(this.state.response_var, "Response from github Api")
+
+    // try{
+    //   fetch('http:localhost:8000/get_registered_user/')
+    // }
+    // catch(err) {
+    //   console.log(err, "GET REQUEST WAS NOT SUCCESSFUL")
+    // }
 }
+
+// registerUser = event =>  {
+//      console.log(" I am here", event)
+//      axios.defaults.xsrfCookieName = 'csrftoken'
+//      axios.defaults.xsrfHeaderName = "X-CSRFTOKEN"
+//     // let token = axios.defaults.headers.post['X-CSRF-TOKEN'];
+//     // var axios = require('axios');
+//     // var axiosDefaults = require("axios/lib/defaults");
+//     //
+//     // axiosDefaults.xsrfCookieName = "csrftoken";
+//     // axiosDefaults.xsrfHeaderName = "X-CSRFToken";
+//     // console.log(token, 'CSRF TOKEN')
+//     let registrationDetails = this.state.registrationDetails
+//     // let registrationDetailsToBeSubmitted = JSON.stringify({
+//         userName: registrationDetails.userName,
+//         password: registrationDetails.password,
+//         email: registrationDetails.email,
+//         phoneNumber: registrationDetails.phoneNumber
+//     })
+//
+//      try{
+//          fetch('http://localhost:3000/posts/',{
+//              method: 'POST',
+//              headers: {
+//                  'Accept': 'application/json',
+//                  'Content-Type': 'application/json'
+//                },
+//                body: registrationDetailsToBeSubmitted
+//              })
+//              .then(response =>  console.log(response, "RESPONSE FETCHED"))
+//            }
+//           catch(err) {
+//                console.log(err, "ERROR RECEIVED")
+//              }
+//   //   try {
+//   //   axios.post('http://localhost:8000/register_user', {
+//   //     method:  'POST',
+//   //     headers: {
+//   //       'Accept': 'application/json',
+//   //       'Content_Type': 'application/json',
+//   //       'xsrfHeaderName': 'csrftoken'
+//   //     },
+//   //     body: registrationDetailsToBeSubmitted
+//   //   })
+//   //   .then(response => console.log(response, "RESPONSE"))
+//   // }
+//   // catch(err) {
+//   //   console.log(err, "ERROR WHILE MAKING REQUEST")
+//   // }
+//
+//
+// }
 
 renderRegisterForm() {
     return(
     <div>
+    <form>
+        <DjangoCsrfToken/>
         <div class="form-group ">
             <label for="usr">Name:</label>
             <input type="text" class="form-control" id="usr" onChange = {this.updateUsernameInState}/>
@@ -1883,6 +1967,7 @@ renderRegisterForm() {
         <div class="align-center">
         <Button variant="success" class="button" onClick={this.registerUser}> Register </Button>
         </div>
+        </form>
     </div>
     )
 }
@@ -1902,7 +1987,7 @@ renderRegisterForm() {
                         {" "}
                       <Button variant="success" class="button-extreme-right" onClick = {this.navigateToRegisterForm}> Register </Button>
                   </div>
-                  
+
                   </div>
              </div>
           </div>
@@ -1914,26 +1999,19 @@ renderRegisterForm() {
 render() {
     if (this.state.pageContent == "login-register-page") {
         return(
-            <div> 
+            <div>
                 {this.renderLoginOrRegisterPage()}
-            
+
             </div>
         )
     } else if (this.state.pageContent == "register-form") {
         return(
-            <div> 
+            <div>
                 {this.renderRegisterForm()}
-            </div> 
+            </div>
         )
     }
   }
 }
 
 export default App;
-
-
-
-
-
-
-
