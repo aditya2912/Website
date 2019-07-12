@@ -1849,10 +1849,17 @@ registerUser = event =>  {
     })
 
     try{
-        axios.get('http:localhost:8000/fetch_details' + '20197813215600296')
+        let uuid = '20197813215600296'
+        let completedUrl =
+        'http://127.0.0.1:8000/fetch_details/'  + uuid
+         // 'http:localhost:8000/fetch_details/' + uuid
+        console.log(completedUrl, 'COMPLETED URL')
+        // axios.get(completedUrl)
+        fetch(completedUrl)
         .then(response =>
           console.log(response, "RESPONSE")
          )
+
 
         // axios.get('https://api.github.com/users/' + 'aditya2912')
         //  .then(res =>
@@ -1877,7 +1884,7 @@ registerUser = event =>  {
     catch(err) {
         console.log(err, "Error")
     }
-    console.log(this.state.response_var, "Response from github Api")
+
 
     // try{
     //   fetch('http:localhost:8000/get_registered_user/')

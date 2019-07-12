@@ -163,7 +163,7 @@ SECRET_KEY = "463hzk*onkb4h&+j@mof$wc(20t$$l17w#(v8-6ipzq7m=$a=j"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["react-django.herokuapp.com", "127.0.0.1", "localhost"]
+ALLOWED_HOSTS = ["react-django.herokuapp.com", "127.0.0.1", "localhost:3000"]
 
 
 # Application definition
