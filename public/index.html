@@ -25,7 +25,18 @@
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
-    <div id="root"></div>
+    <div id="root"> </div>
+    <script src="C:\Website\src\App.js">
+    var user_uuid =  "{{ name }}";
+    window["user_name"] = "{{ name }}";
+    console.log("value has set");
+    localStorage.setItem("user_name", "{{ name }}");
+    console.log(window.user_name, 'USER NAME IN WINDOW')
+    // window.user_uuid = {JSON.parse("{{ name }}");}
+    // window.user_uuid = "{{user_uuid}}"
+        // return user_uuid
+    </script>
+    {% block javaScript %}{% endblock %}
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.

@@ -1859,7 +1859,15 @@ registerUser = event =>  {
         .then(response =>
           console.log(response, "RESPONSE")
          )
+         var a  = localStorage.getItem("user_name");
+         console.log(a, "WINDOW")
+         // alert(window.user_uuid);
+         // console.log(JSON.stringify(window.user_uuid), "WINDOW VAR")
 
+
+        // var element = document.getElementById("root")
+        // console.log(element, "ELEMENT")
+         //console.log(window.user_uuid, 'WINDOW.USER UUID')
 
         // axios.get('https://api.github.com/users/' + 'aditya2912')
         //  .then(res =>

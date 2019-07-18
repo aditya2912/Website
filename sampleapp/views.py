@@ -112,7 +112,7 @@ def fetch_details_by_uuid(request, uuid):
         # print(user_details_in_json, "USER DETAILS")
         name = json.dumps(user_details.username, indent=2)
         print(name, "NAME ")
-        return SimpleTemplateResponse("C:/Website/build/index.html", {"name": name})
+        return SimpleTemplateResponse("index.html", {"name": json.dumps(name)})
 
         # return HttpResponse(user_details, content_type="application/json")
         # return render(request, "C:/Website/build/index.html", {"name": name})
